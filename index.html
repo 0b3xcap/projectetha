@@ -87,7 +87,7 @@
   </div>
 
   <!-- Transmit Button -->
-  <button id="transmitBtn" onclick="window.open('https://www.dropbox.com/request/SYP3CIReBUVvvlCMTcU3', '_blank')">
+  <button id="transmitBtn" onclick="handleTransmitClick()">
     TRANSMIT
   </button>
 
@@ -95,7 +95,7 @@
     window.onload = () => {
       setTimeout(() => {
         document.getElementById('startOverlay').style.opacity = 1;
-      }, 300); // small delay before fade in
+      }, 300);
     };
 
     function startExperience() {
@@ -103,17 +103,20 @@
       const overlay = document.getElementById('startOverlay');
       const button = document.getElementById('transmitBtn');
 
-      // Fade out overlay
       overlay.style.opacity = 0;
-
-      // Start audio
       audio.play().catch(() => {});
-
-      // After fade-out completes, remove overlay and fade in button
       setTimeout(() => {
         overlay.style.display = 'none';
         button.style.opacity = 1;
-      }, 2000); // match transition duration
+      }, 2000);
+    }
+
+    function handleTransmitClick() {
+      const button = document.getElementById('transmitBtn');
+      button.style.opacity = 0;
+      setTimeout(() => {
+        window.open('https://www.dropbox.com/request/SYP3CIReBUVvvlCMTcU3', '_blank');
+      }, 1000); // slight delay for fade effect
     }
   </script>
 
