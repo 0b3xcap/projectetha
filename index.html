@@ -23,6 +23,7 @@
       right: 20px;
       width: 60px;
       opacity: 0.8;
+      z-index: 6;
     }
 
     #startOverlay {
@@ -71,9 +72,27 @@
       background: white;
       color: black;
     }
+
+    #bgVideo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: 1;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 2s ease;
+    }
   </style>
 </head>
 <body>
+
+  <!-- Animated background -->
+  <video id="bgVideo" autoplay muted loop playsinline>
+    <source src="projectetha bg animate.MP4" type="video/mp4" />
+  </video>
 
   <!-- Logo bottom right -->
   <img id="logo" src="IMG_2114.jpeg" alt="ETHA Logo" />
@@ -102,8 +121,10 @@
       const audio = document.getElementById('ethasound');
       const overlay = document.getElementById('startOverlay');
       const button = document.getElementById('transmitBtn');
+      const video = document.getElementById('bgVideo');
 
       overlay.style.opacity = 0;
+      video.style.opacity = 1;
       audio.play().catch(() => {});
       setTimeout(() => {
         overlay.style.display = 'none';
@@ -116,7 +137,7 @@
       button.style.opacity = 0;
       setTimeout(() => {
         window.open('https://www.dropbox.com/request/SYP3CIReBUVvvlCMTcU3', '_blank');
-      }, 1000); // slight delay for fade effect
+      }, 1000);
     }
   </script>
 
