@@ -1,1 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+  <title>Project ETHA</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background: #000;
+      height: 100vh;
+      width: 100vw;
+      font-family: 'Helvetica Neue', sans-serif;
+      color: white;
+      text-align: center;
+    }
 
+    #logo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      opacity: 0.8;
+    }
+
+    #startOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background: #000;
+      z-index: 10;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
+
+    #startOverlay span {
+      color: #fff;
+      font-size: 16px;
+      opacity: 0.7;
+      letter-spacing: 0.1em;
+    }
+
+    #transmitBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 18px 32px;
+      background: none;
+      border: 1px solid white;
+      border-radius: 2px;
+      color: white;
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      z-index: 5;
+    }
+
+    #transmitBtn:hover {
+      background: white;
+      color: black;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Logo bottom right -->
+  <img id="logo" src="IMG_2114.jpeg" alt="ETHA Logo" />
+
+  <!-- Audio preload -->
+  <audio id="ethasound" src="ethafield.mp3" preload="auto" loop></audio>
+
+  <!-- Overlay screen to activate audio -->
+  <div id="startOverlay" onclick="startExperience()">
+    <span>tap to begin</span>
+  </div>
+
+  <!-- Transmit Button -->
+  <button id="transmitBtn" onclick="window.open('https://www.dropbox.com/request/SYP3CIReBUVvvlCMTcU3', '_blank')">
+    TRANSMIT
+  </button>
+
+  <script>
+    function startExperience() {
+      const audio = document.getElementById('ethasound');
+      audio.play().catch(() => {}); // in case autoplay fails
+      document.getElementById('startOverlay').style.display = 'none';
+    }
+  </script>
+
+</body>
+</html>
