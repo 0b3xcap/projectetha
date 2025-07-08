@@ -8,77 +8,114 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: black;
-      color: white;
-      font-family: monospace;
-      height: 100vh;
       overflow: hidden;
+      background: #000;
+      height: 100vh;
+      width: 100vw;
+      font-family: 'Helvetica Neue', sans-serif;
+      color: white;
+      text-align: center;
+    }
+
+    #logo {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      opacity: 0.8;
+    }
+
+    #startOverlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      width: 100vw;
+      background: #000;
+      z-index: 10;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-    }
-
-    #start-text, #transmit-button {
-      position: absolute;
-      opacity: 0;
-      transition: opacity 1.5s ease;
-      z-index: 2;
-    }
-
-    #start-text {
-      font-size: 1.2em;
-    }
-
-    #transmit-button {
-      padding: 12px 24px;
-      font-size: 1em;
-      border: 1px solid white;
-      background: transparent;
-      color: white;
       cursor: pointer;
-      display: none;
-      text-decoration: none;
+      opacity: 0;
+      transition: opacity 2s ease;
     }
 
-    audio {
-      display: none;
+    #startOverlay span {
+      color: #fff;
+      font-size: 16px;
+      opacity: 0.7;
+      letter-spacing: 0.1em;
+    }
+
+    #transmitBtn {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 18px 32px;
+      background: none;
+      border: 1px solid white;
+      border-radius: 2px;
+      color: white;
+      font-size: 16px;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      z-index: 5;
+      opacity: 0;
+      transition: opacity 2s ease;
+      display: block;
+    }
+
+    #transmitBtn:hover {
+      background: white;
+      color: black;
     }
   </style>
 </head>
 <body>
 
-  <div id="start-text">Tap to begin</div>
-  <a id="transmit-button" href="https://www.dropbox.com/request/SYP3C1ReBUVvvICMTcU3" target="_blank">Transmit</a>
-  <audio id="etha-audio" src="ethafield.mp3"></audio>
+  <!-- Logo bottom right -->
+  <img id="logo" src="IMG_2114.jpeg" alt="ETHA Logo" />
+
+  <!-- Audio preload -->
+  <audio id="ethasound" src="ethafield.mp3" preload="auto" loop></audio>
+
+  <!-- Overlay screen to activate audio -->
+  <div id="startOverlay" onclick="startExperience()">
+    <span>tap to begin</span>
+  </div>
+
+  <!-- Transmit Button -->
+  <button id="transmitBtn" onclick="window.open('https://www.dropbox.com/request/SYP3CIReBUVvvlCMTcU3', '_blank')">
+    TRANSMIT
+  </button>
 
   <script>
-    const startText = document.getElementById('start-text');
-    const transmitButton = document.getElementById('transmit-button');
-    const audio = document.getElementById('etha-audio');
-
-    // Initial fade-in
     window.onload = () => {
       setTimeout(() => {
-        startText.style.opacity = 1;
-      }, 500);
+        document.getElementById('startOverlay').style.opacity = 1;
+      }, 300); // small delay before fade in
     };
 
-    // On tap
-    document.body.addEventListener('click', () => {
-      startText.style.opacity = 0;
+    function startExperience() {
+      const audio = document.getElementById('ethasound');
+      const overlay = document.getElementById('startOverlay');
+      const button = document.getElementById('transmitBtn');
 
-      audio.play().catch(() => {
-        console.warn("Autoplay failed — user interaction needed.");
-      });
+      // Fade out overlay
+      overlay.style.opacity = 0;
 
+      // Start audio
+      audio.play().catch(() => {});
+
+      // After fade-out completes, remove overlay and fade in button
       setTimeout(() => {
-        transmitButton.style.display = 'block';
-        setTimeout(() => {
-          transmitButton.style.opacity = 1;
-        }, 50);
-      }, 1500);
-    }, { once: true });
+        overlay.style.display = 'none';
+        button.style.opacity = 1;
+      }, 2000); // match transition duration
+    }
   </script>
+
 </body>
 </html>
